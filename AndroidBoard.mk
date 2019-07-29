@@ -26,5 +26,16 @@
 LOCAL_PATH := $(call my-dir)
 
 ifneq ($(filter X00Q,$(TARGET_DEVICE)),)
+
+NEW_PLATFORM_VERSION := 9
+NEW_PLATFORM_SECURITY_PATCH := 2019-05-01
+
+LOCAL_PATH := $(call my-dir)
 include $(call all-makefiles-under,$(LOCAL_PATH))
+
+include $(CLEAR_VARS)
+
+BOARD_RECOVERY_IMAGE_PREPARE := \
+  sed -i 's/ro.product.name=.*/ro.product.name=OPEN_Phone/g' $(TARGET_RECOVERY_ROOT_OUT)/default.prop ;\
+  sed -i '$a ro.config.CID=ASUS' $(TARGET_RECOVERY_ROOT_OUT)/default.prop
 endif
